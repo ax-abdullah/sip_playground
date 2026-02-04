@@ -80,7 +80,7 @@ combinedRotateTransport.on('rotate', (oldFilename, newFilename) => {
 const logger = winston.createLogger({
   level: level(),
   levels,
-  defaultMeta: { service: 'express-api' },
+  defaultMeta: { service: 'SIP_PLAYGROUND' },
   transports: [
     combinedRotateTransport,
     errorRotateTransport,

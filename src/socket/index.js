@@ -89,6 +89,45 @@ class SocketManager {
   }
 
   /**
+   * Wrap socket to log all events (incoming and outgoing)
+   */
+  _attachEventLogger(socket) {
+    // Log all incoming events
+    const originalOnEvent = socket.onevent;
+    socket.onevent = function(packet) {
+      const [event, ...args] = packet.data || [];
+      
+      // Skip internal events
+      if (!event.startsWith('ping') && !event.startsWith('pong')) {
+        logger.debug('Socket event received', {
+          socketId: socket.id,
+          event,
+          payload: args.length === 1 ? args[0] : args,
+          timestamp: new Date().toISOString(),
+        });
+      }
+      
+      originalOnEvent.call(this, packet);
+    };
+
+    // Log all outgoing events
+    const originalEmit = socket.emit;
+    socket.emit = function(event, ...args) {
+      // Skip internal/ack events
+      if (typeof event === 'string' && !event.startsWith('ping') && !event.startsWith('pong')) {
+        logger.debug('Socket event emitted', {
+          socketId: socket.id,
+          event,
+          payload: args.length === 1 ? args[0] : args,
+          timestamp: new Date().toISOString(),
+        });
+      }
+      
+      return originalEmit.apply(this, [event, ...args]);
+    };
+  }
+
+  /**
    * Setup default namespace event handlers
    */
   _setupDefaultNamespace() {
@@ -97,6 +136,9 @@ class SocketManager {
         socketId: socket.id,
         rooms: Array.from(socket.rooms),
       });
+
+      // Attach event logger to this socket
+      this._attachEventLogger(socket);
 
       // Track connected clients in Redis
       this._trackConnection(socket);
