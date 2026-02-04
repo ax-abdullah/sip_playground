@@ -1,10 +1,9 @@
 services:
-  # Express.js Application
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: express-app
+    container_name: SIP_PLAYGROUND
     restart: unless-stopped
     ports:
       - "3000:3000"

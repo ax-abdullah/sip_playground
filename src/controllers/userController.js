@@ -1,6 +1,6 @@
 const redisService = require('../services/redis');
 const logger = require('../utils/logger');
-const { ApiError } = require('../middleware/errorHandler');
+const { ApiResponse } = require('../utils/response');
 
 // In-memory store for demo (replace with database service)
 let users = [
@@ -23,7 +23,7 @@ const userController = {
     if (cached) {
       logger.info('Users fetched from cache');
       res.set('X-Cache', 'HIT');
-      return res.json({ data: cached, count: cached.length, cached: true });
+      return ApiResponse.collection(res, cached, { cached: true });
     }
 
     // Cache miss - get from "database"
@@ -31,7 +31,7 @@ const userController = {
     logger.info('Users fetched from database and cached');
     
     res.set('X-Cache', 'MISS');
-    res.json({ data: users, count: users.length, cached: false });
+    return ApiResponse.collection(res, users, { cached: false });
   },
 
   // Get user by ID with caching
@@ -44,13 +44,13 @@ const userController = {
     if (cached) {
       logger.info('User fetched from cache', { userId: id });
       res.set('X-Cache', 'HIT');
-      return res.json({ data: cached, cached: true });
+      return ApiResponse.success(res, cached, 200, { cached: true });
     }
 
     // Find in "database"
     const user = users.find(u => u.id === id);
     if (!user) {
-      throw new ApiError(404, 'User not found');
+      return ApiResponse.notFound(res, 'User not found');
     }
 
     // Cache the result
@@ -58,7 +58,7 @@ const userController = {
     logger.info('User fetched from database and cached', { userId: id });
     
     res.set('X-Cache', 'MISS');
-    res.json({ data: user, cached: false });
+    return ApiResponse.success(res, user, 200, { cached: false });
   },
 
   // Create new user and invalidate cache
@@ -66,7 +66,16 @@ const userController = {
     const { name, email } = req.body;
     
     if (!name || !email) {
-      throw new ApiError(400, 'Name and email are required');
+      return ApiResponse.validationError(res, [
+        ...(!name ? [{ field: 'name', message: 'Name is required' }] : []),
+        ...(!email ? [{ field: 'email', message: 'Email is required' }] : []),
+      ]);
+    }
+
+    // Check for duplicate email
+    const exists = users.find(u => u.email === email);
+    if (exists) {
+      return ApiResponse.conflict(res, 'User with this email already exists');
     }
 
     const newUser = { 
@@ -81,7 +90,7 @@ const userController = {
     await redisService.del(`${CACHE_KEY_PREFIX}:all`);
     logger.info('User created and cache invalidated', { userId: newUser.id });
     
-    res.status(201).json({ data: newUser, message: 'User created successfully' });
+    return ApiResponse.created(res, newUser);
   },
 
   // Update user and invalidate cache
@@ -90,10 +99,19 @@ const userController = {
     const index = users.findIndex(u => u.id === id);
     
     if (index === -1) {
-      throw new ApiError(404, 'User not found');
+      return ApiResponse.notFound(res, 'User not found');
     }
 
     const { name, email } = req.body;
+
+    // Check for duplicate email (excluding current user)
+    if (email) {
+      const exists = users.find(u => u.email === email && u.id !== id);
+      if (exists) {
+        return ApiResponse.conflict(res, 'User with this email already exists');
+      }
+    }
+
     users[index] = { 
       ...users[index], 
       name: name || users[index].name, 
@@ -106,7 +124,7 @@ const userController = {
     await redisService.del(`${CACHE_KEY_PREFIX}:all`);
     logger.info('User updated and cache invalidated', { userId: id });
     
-    res.json({ data: users[index], message: 'User updated successfully' });
+    return ApiResponse.success(res, users[index]);
   },
 
   // Delete user and invalidate cache
@@ -115,7 +133,7 @@ const userController = {
     const index = users.findIndex(u => u.id === id);
     
     if (index === -1) {
-      throw new ApiError(404, 'User not found');
+      return ApiResponse.notFound(res, 'User not found');
     }
 
     const deleted = users.splice(index, 1)[0];
@@ -125,7 +143,7 @@ const userController = {
     await redisService.del(`${CACHE_KEY_PREFIX}:all`);
     logger.info('User deleted and cache invalidated', { userId: id });
     
-    res.json({ data: deleted, message: 'User deleted successfully' });
+    return ApiResponse.success(res, deleted);
   }
 };
 

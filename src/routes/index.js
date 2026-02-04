@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { asyncHandler } = require('../middleware/errorHandler');
+const { ApiResponse } = require('../utils/response');
 
 const userRoutes = require('./userRoutes');
 
@@ -9,8 +10,8 @@ router.use('/users', userRoutes);
 
 // API info endpoint
 router.get('/', asyncHandler(async (req, res) => {
-  res.json({
-    message: 'Welcome to the Express API',
+  return ApiResponse.success(res, {
+    name: 'Express Starter Kit API',
     version: '1.0.0',
     endpoints: {
       users: '/api/users',

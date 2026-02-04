@@ -63,6 +63,11 @@ async function initializeServices() {
 app.use(helmet());
 app.use(cors());
 
+// Request ID middleware - must be early in the chain
+const { requestIdMiddleware } = require('./utils/response');
+const { ApiResponse } = require('./utils/response');
+app.use(requestIdMiddleware);
+
 // Request logging with Winston stream
 app.use(morgan('combined', { stream: logger.stream }));
 
@@ -94,9 +99,8 @@ app.get('/health', async (req, res) => {
   const redisHealthy = await redisService.ping();
   const socketStats = await socketManager.getStats();
 
-  const status = {
-    status: 'ok',
-    timestamp: new Date().toISOString(),
+  const healthData = {
+    status: redisHealthy ? 'healthy' : 'degraded',
     uptime: process.uptime(),
     services: {
       redis: redisHealthy ? 'healthy' : 'unhealthy',
@@ -107,20 +111,23 @@ app.get('/health', async (req, res) => {
     },
   };
 
-  const httpStatus = redisHealthy ? 200 : 503;
-  res.status(httpStatus).json(status);
+  if (!redisHealthy) {
+    return ApiResponse.error(res, 503, 'Service degraded', 'SERVICE_DEGRADED', healthData);
+  }
+
+  return ApiResponse.success(res, healthData);
 });
 
 // Socket.io status endpoint
 app.get('/socket/stats', async (req, res) => {
   const stats = await socketManager.getStats();
-  res.json(stats);
+  return ApiResponse.success(res, stats);
 });
 
 // 404 handler
 app.use((req, res) => {
   logger.warn('Route not found', { method: req.method, url: req.originalUrl });
-  res.status(404).json({ error: 'Not Found' });
+  return ApiResponse.notFound(res, `Route ${req.method} ${req.originalUrl} not found`);
 });
 
 // Global error handler

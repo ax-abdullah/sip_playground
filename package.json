@@ -1,5 +1,5 @@
 {
-  "name": "express-starter-kit",
+  "name": "SIP_PLAYGROUND",
   "version": "1.0.0",
   "description": "A modern Express.js starter kit with best practices",
   "engines": {
@@ -28,6 +28,8 @@
     "joi": "^18.0.2",
     "morgan": "^1.10.0",
     "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "uuid": "^13.0.0",
     "winston": "^3.19.0",
     "winston-daily-rotate-file": "^5.0.0"
   },
