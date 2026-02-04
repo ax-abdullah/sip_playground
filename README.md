@@ -36,7 +36,7 @@ A production-ready Express.js starter kit with Winston logging, Redis caching, a
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22+ (LTS)
 - Redis server running
 
 ### Installation
