@@ -151,6 +151,22 @@ class SocketManager {
           
           // Track room membership
           await this._trackRoomMembership(socket.id, roomName, 'join');
+
+          // Emit room:joined event to the socket that joined
+          socket.emit('room:joined', {
+            room: roomName,
+            socketId: socket.id,
+            namespace: '/',
+            timestamp: new Date().toISOString(),
+          });
+
+          // Notify other room members that someone joined
+          socket.to(roomName).emit('room:user_joined', {
+            room: roomName,
+            socketId: socket.id,
+            namespace: '/',
+            timestamp: new Date().toISOString(),
+          });
           
           if (callback) callback({ success: true, room: roomName });
         } catch (error) {
@@ -162,10 +178,26 @@ class SocketManager {
       // Handle room leaving
       socket.on('leave:room', async (roomName, callback) => {
         try {
+          // Notify room members before leaving
+          socket.to(roomName).emit('room:user_left', {
+            room: roomName,
+            socketId: socket.id,
+            namespace: '/',
+            timestamp: new Date().toISOString(),
+          });
+
           await socket.leave(roomName);
           logger.info('Socket left room', { socketId: socket.id, room: roomName });
           
           await this._trackRoomMembership(socket.id, roomName, 'leave');
+
+          // Emit room:left event to the socket that left
+          socket.emit('room:left', {
+            room: roomName,
+            socketId: socket.id,
+            namespace: '/',
+            timestamp: new Date().toISOString(),
+          });
           
           if (callback) callback({ success: true, room: roomName });
         } catch (error) {
