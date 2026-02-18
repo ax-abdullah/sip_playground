@@ -9,3 +9,5 @@
 3. User Capabilities: determination of the media and media parameters to be used
 4. Session Setup: "ringing", establishment of session parameters at both called and calling party
 5. Session Management: including transfer, and termination of sessions, modifying session parameters, and invoking services.
+
+### SIP alone does not provide the media services. It relies on other protocols for that. If you are interacting with SS7 networks, the MEGACO protocol is used. In terms of IP networks SIP will rely on the Real Time Protocol, or RTP for transport of the media
