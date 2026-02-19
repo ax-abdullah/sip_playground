@@ -65,7 +65,16 @@ Call-ID: a84b4c76e66710@pc33.atlanta.com
 ```
 
 - The **Concept**: This is the primary key of the session. A globally unique identifier for this specific session.
-- The **Value**: If you are building a call logger or debugging a dropped cal in Elasticsearch for example, this is you **correlation id**. Crucially, if a user hags up and redials immediately, this is a new Call-ID.
+- The **Value**: If you are building a call logger or debugging a dropped cal in Elasticsearch for example, this is your **correlation id**.
+
+### 3. CSeq: The Sequence Number
+
+```text
+CSeq: 314159 INVITE
+```
+
+- The **Concept**: This is the sequence number of the request. It is used to identify the request and to ensure that the request is processed in the correct order. It handles ordering and retransmissions.
+- The **Value**: The sequence number is a monotonically increasing integer that is incremented for each request sent in a dialog. Since SIP often run over UDP, which is an unreliable, packets can arrive out of order. If you receive CSeq 20 before CSeq 19, you application must handle that logic. it also matches requests to responses (an INVITE CSeq must me answered by a response with the same CSeq)
 
 ## SIP Request Body
 
