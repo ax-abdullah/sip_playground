@@ -55,7 +55,7 @@ Via: SIP/2.0/UDP pc33.atlanta.com;branch=z9hG4bK776asdhds
 ```
 
 - The **Concept**: This is the network stack trace. Every proxy that touches the packet adds its own **Via** header to the top of the stack.
-- The **Value**: When a server sends a response (like 200 OK), it doesn't look at the **From** header. It looks at the top **Via** header to know exactly which IP/Port to send the response to.
+- The **Value**: When a server sends a response (like 200 OK), it doesn't look at the `From` header. It looks at the top **Via** header to know exactly which IP/Port to send the response to.
 It pops the headers off one by one as the response travels back.
 
 ### 2. Call-ID: The Primary Key
@@ -84,6 +84,9 @@ Contact: <sip:alice@10.1.3.33:5060>
 
 - The **Concept**: This tells the other party, "Please send future requests for this specific call directly to this IP/Port".
 - The **Value**: This is the most common source of "One Way Audio" or "Call drops after 30 seconds" bugs. If the IP address in the contact header is not reachable by the other party, the call will not be able to establish a connection.
+- `From` and `To` headers are **Logical Identifiers**, they are used to identify the caller and the callee. They are not used to route the call. They are like email addresses or usernames. They do not tell you where the server actually lives on the network, they just tell you who is involved. Thy remain completely unchanged for the entire duration of the call.
+- `Contact` is the **Physical Address** of the user. It is the IP address and port number of the user. It is used to route the call to the user. It can change during the call. For example if the user moves from one network to another. It is also used to identify the user in the registry.
+- When dealing with proxies (like Kamailio), the proxy might use the `To` header to look up where the user is currently registered in a database, but once the call is connected, the parties will use each other's `Contact` headers to send in-dialog requests (like BYE, INFO, UPDATE, etc.) directly to each other, bypassing the proxy.
 
 ## SIP Request Body
 
