@@ -46,6 +46,27 @@ Authorization: Digest username="1000",realm="asterisk",nonce="1471955086/5e8a879
 Content-Length: 0
 ```
 
+## The "Big Four" Headers
+
+### 1. Via: The Breadcumbs
+
+```text
+Via: SIP/2.0/UDP pc33.atlanta.com;branch=z9hG4bK776asdhds
+```
+
+- The **Concept**: This is the network stack trace. Every proxy that touches the packet adds its own **Via** header to the top of the stack.
+- The **Value**: When a server sends a response (like 200 OK), it doesn't look at the **From** header. It looks at the top **Via** header to know exactly which IP/Port to send the response to.
+It pops the headers off one by one as the response travels back.
+
+### 2. Call-ID: The Primary Key
+
+```text
+Call-ID: a84b4c76e66710@pc33.atlanta.com
+```
+
+- The **Concept**: This is the primary key of the session. A globally unique identifier for this specific session.
+- The **Value**: If you are building a call logger or debugging a dropped cal in Elasticsearch for example, this is you **correlation id**. Crucially, if a user hags up and redials immediately, this is a new Call-ID.
+
 ## SIP Request Body
 
 - The **Body** is optional and is used to provide additional information about the request.

@@ -1,0 +1,9 @@
+SIP/2.0 401 Unauthorized
+Via: SIP/2.0/UDP 192.168.34.153:50820;rport=50820;received=192.168.34.153;branch=z9hG4bK-524287-1---082e49264cbfbf3a
+Call-ID: 80103NTAyMTdhZjg2ZTc5MTdhMDRjZmNiZWI4Y2VkNDNlMDI
+From: <sip:1000@192.168.34.144>;tag=2eaa6b0f
+To: <sip:1000@192.168.34.144>;tag=z9hG4bK-524287-1---082e49264cbfbf3a
+CSeq: 1 REGISTER
+WWW-Authenticate: Digest  realm="asterisk",nonce="1471955086/5e8a879717e9231143a0160a5355daaf",opaque="6e81bca34e2cab98",algorithm=md5,qop="auth"
+Server: FPBX-13.0.163(13.9.1)
+Content-Length:  0

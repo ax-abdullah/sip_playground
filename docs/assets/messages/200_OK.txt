@@ -1,0 +1,14 @@
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 192.168.34.144:5060;rport=5060;branch=z9hG4bKPjGI-y29Bep0Pmg-noegpeTEIgJlOqCp1a
+Contact: <sip:192.168.34.153:50820>
+To: <sip:1000@192.168.34.153;rinstance=2faa2f419739e433>;tag=85406038
+From: <sip:1000@192.168.34.144>;tag=ArrpYvPGwm-ItSGfGngXuLcbqtblFcGs
+Call-ID: YREYCykz5u9wN63CsTl4o3pNAD1uyBkn
+CSeq: 11812 OPTIONS
+Accept: application/sdp
+Accept-Language: en
+Allow: SUBSCRIBE, NOTIFY, INVITE, ACK, CANCEL, BYE, REFER, INFO, OPTIONS, MESSAGE
+Supported: replaces
+User-Agent: X-Lite release 4.9.4 stamp 80103
+Allow-Events: talk, hold
+Content-Length: 0

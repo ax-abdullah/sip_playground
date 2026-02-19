@@ -1,0 +1,12 @@
+REGISTER sip:192.168.34.144 SIP/2.0
+Via: SIP/2.0/UDP 192.168.34.153:50820;branch=z9hG4bK-524287-1---082e49264cbfbf3a;rport
+Max-Forwards: 70
+Contact: <sip:1000@192.168.34.153:50820;rinstance=2faa2f419739e433>
+To: <sip:1000@192.168.34.144>
+From: <sip:1000@192.168.34.144>;tag=2eaa6b0f
+Call-ID: 80103NTAyMTdhZjg2ZTc5MTdhMDRjZmNiZWI4Y2VkNDNlMDI
+CSeq: 1 REGISTER
+Expires: 3600
+Allow: SUBSCRIBE, NOTIFY, INVITE, ACK, CANCEL, BYE, REFER, INFO, OPTIONS, MESSAGE
+User-Agent: X-Lite release 4.9.4 stamp 80103
+Content-Length: 0
