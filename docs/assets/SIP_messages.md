@@ -76,6 +76,15 @@ CSeq: 314159 INVITE
 - The **Concept**: This is the sequence number of the request. It is used to identify the request and to ensure that the request is processed in the correct order. It handles ordering and retransmissions.
 - The **Value**: The sequence number is a monotonically increasing integer that is incremented for each request sent in a dialog. Since SIP often run over UDP, which is an unreliable, packets can arrive out of order. If you receive CSeq 20 before CSeq 19, you application must handle that logic. it also matches requests to responses (an INVITE CSeq must me answered by a response with the same CSeq)
 
+### 4. Contact: The Direct Line
+
+```text
+Contact: <sip:alice@10.1.3.33:5060>
+```
+
+- The **Concept**: This tells the other party, "Please send future requests for this specific call directly to this IP/Port".
+- The **Value**: This is the most common source of "One Way Audio" or "Call drops after 30 seconds" bugs. If the IP address in the contact header is not reachable by the other party, the call will not be able to establish a connection.
+
 ## SIP Request Body
 
 - The **Body** is optional and is used to provide additional information about the request.
