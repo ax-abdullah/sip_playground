@@ -113,6 +113,8 @@ if (process.env.NODE_ENV !== 'production') {
       errors({ stack: true }),
       consoleFormat
     ),
+    handleExceptions: true,
+    handleRejections: true,
   }));
 }
 

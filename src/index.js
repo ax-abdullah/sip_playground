@@ -139,21 +139,37 @@ app.use(errorHandler);
 async function gracefulShutdown(signal) {
   logger.info(`${signal} received, starting graceful shutdown`);
 
-  // Close HTTP server
-  server.close(() => {
-    logger.info('HTTP server closed');
-  });
+  // Force exit after 3 seconds if graceful shutdown hangs
+  setTimeout(() => {
+    logger.error('Graceful shutdown timed out, forcing exit');
+    process.exit(1);
+  }, 3000).unref();
 
-  // Disconnect Redis
-  await redisService.disconnect();
+  try {
+    // Close socket.io connections to ensure clean disconnect
+    if (socketManager && socketManager.io) {
+      socketManager.io.close();
+    }
 
-  // Exit
+    // Close HTTP server
+    server.close(() => {
+      logger.info('HTTP server closed');
+    });
+
+    // Disconnect Redis
+    await redisService.disconnect();
+  } catch (error) {
+    logger.error('Error during graceful shutdown', { error: error.message });
+  }
+
+  // Always forcefully exit to release the port immediately.
   process.exit(0);
 }
 
 // Handle shutdown signals
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.once('SIGUSR2', () => gracefulShutdown('SIGUSR2'));
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
@@ -162,7 +178,7 @@ process.on('uncaughtException', (error) => {
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  logger.error('Unhandled Rejection', { reason, promise });
+  logger.error('Unhandled Rejection', { reason, promise }); 
 });
 
 // Start server

@@ -7,7 +7,7 @@ A production-ready Express.js starter kit with Winston logging, Redis caching, a
 - ✅ Express.js 4.x
 - ✅ **Winston** - Structured logging with daily rotation
 - ✅ **Redis** - Caching with ioredis client
-- ✅ **Socket.io** - Real-time bidirectional communication
+- ✅ **Socket.io** - Real-time bidirectional communication with comprehensive event logging and Redis tracking
 - ✅ Security middleware (Helmet, CORS)
 - ✅ Request logging (Morgan → Winston)
 - ✅ Graceful shutdown handling
@@ -66,6 +66,8 @@ npm run dev
 
 ## Socket.io Events
 
+For a complete reference of all Socket.io events, payloads, namespaces, and instructions on how to test via Postman, please refer to the detailed [Socket.io Events Documentation](postman/SOCKET_EVENTS.md).
+
 ### Default Namespace (`/`)
 
 | Event | Direction | Description |
@@ -106,9 +108,19 @@ socket.on('message:receive', (data) => {
 ## Logging
 
 Logs are written to `logs/` directory:
+
 - `combined-YYYY-MM-DD.log` - All logs
 - `error-YYYY-MM-DD.log` - Error logs only
 - `exceptions-YYYY-MM-DD.log` - Uncaught exceptions
+
+*Note: All incoming and outgoing Socket.io events are logged through the Winston logger for monitoring and debugging.*
+
+## SIP Integration
+
+A foundational SIP parser and documentation repository have been added to this project, providing insights into SIP signaling, fundamentals, and message flows. For comprehensive documentation, please see:
+- [SIP Overview](docs/SIP_overview.md)
+- [SIP Messages & Headers Reference](docs/assets/SIP_messages.md)
+- Also included are real-world SIP message captures (e.g., `INVITE`, `REGISTER`, `ACK`, `BYE`, `200 OK`) and Postman collections mapped throughout the codebase (`src/routes/sipParserRoutes.js`, `src/controllers/SIP/`).
 
 ## Scripts
 

@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
 
 /**
  * Standardized API Response Wrapper
@@ -26,7 +26,7 @@ class ApiResponse {
       data,
       meta: {
         timestamp: new Date().toISOString(),
-        requestId: res.locals.requestId || uuidv4(),
+        requestId: res.locals.requestId || randomUUID(),
         ...meta,
       },
     });
@@ -55,7 +55,7 @@ class ApiResponse {
       data,
       meta: {
         timestamp: new Date().toISOString(),
-        requestId: res.locals.requestId || uuidv4(),
+        requestId: res.locals.requestId || randomUUID(),
         pagination: {
           page: parseInt(page, 10),
           limit: parseInt(limit, 10),
@@ -78,7 +78,7 @@ class ApiResponse {
       data,
       meta: {
         timestamp: new Date().toISOString(),
-        requestId: res.locals.requestId || uuidv4(),
+        requestId: res.locals.requestId || randomUUID(),
         count: Array.isArray(data) ? data.length : 0,
         ...meta,
       },
@@ -110,7 +110,7 @@ class ApiResponse {
       },
       meta: {
         timestamp: new Date().toISOString(),
-        requestId: res.locals.requestId || uuidv4(),
+        requestId: res.locals.requestId || randomUUID(),
       },
     };
 
@@ -176,7 +176,7 @@ class ApiResponse {
  * Middleware to attach request ID to response
  */
 const requestIdMiddleware = (req, res, next) => {
-  const requestId = req.headers['x-request-id'] || uuidv4();
+  const requestId = req.headers['x-request-id'] || randomUUID();
   res.locals.requestId = requestId;
   res.setHeader('X-Request-ID', requestId);
   next();
