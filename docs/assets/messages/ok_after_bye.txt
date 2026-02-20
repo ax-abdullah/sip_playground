@@ -1,0 +1,10 @@
+SIP/2.0 200 OK
+Via: SIP/2.0/WS 15.188.152.201:0;branch=z9hG4bK741fc999;rport
+From: <sip:5701119694298@hojuzat.bevatel.com>;tag=as5ee0bc23
+To: "Abdullah" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca
+CSeq: 102 BYE
+Call-ID: 6eudmg9f02tvm1s3uf51
+Supported: outbound
+User-Agent: Browser Phone 0.3.24 (SIPJS - 0.20.0) Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Content-Length: 0
+

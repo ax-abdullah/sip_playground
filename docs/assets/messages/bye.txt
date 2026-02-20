@@ -1,0 +1,13 @@
+BYE sip:fm9ql4uu@192.0.2.13;transport=wss;ob SIP/2.0
+Via: SIP/2.0/WS 15.188.152.201:0;branch=z9hG4bK741fc999;rport
+Max-Forwards: 70
+From: <sip:5701119694298@hojuzat.bevatel.com>;tag=as5ee0bc23
+To: "Abdullah" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca
+Call-ID: 6eudmg9f02tvm1s3uf51
+CSeq: 102 BYE
+User-Agent: Hojuzat-Cloud-PBX
+Proxy-Authorization: Digest username="hqm4f069", realm="asterisk", algorithm=MD5, uri="sip:hojuzat.bevatel.com", nonce="0f475b76", response="da184870d94f7005f03bd218d59936f0"
+X-Asterisk-HangupCause: Normal Clearing
+X-Asterisk-HangupCauseCode: 16
+Content-Length: 0
+

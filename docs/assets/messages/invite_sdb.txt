@@ -1,0 +1,54 @@
+INVITE sip:5701119694298@hojuzat.bevatel.com SIP/2.0
+Via: SIP/2.0/WSS 192.0.2.13;branch=z9hG4bK7569671
+To: <sip:5701119694298@hojuzat.bevatel.com>
+From: "Abdullah" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca
+CSeq: 2 INVITE
+Call-ID: 6eudmg9f02tvm1s3uf51
+Max-Forwards: 70
+Authorization: Digest algorithm=MD5, username="2022", realm="asterisk", nonce="0f475b76", uri="sip:5701119694298@hojuzat.bevatel.com", response="af17033e33324fed8721fde740e502c1"
+Contact: <sip:fm9ql4uu@192.0.2.13;transport=wss;ob>
+Allow: ACK,CANCEL,INVITE,MESSAGE,BYE,OPTIONS,INFO,NOTIFY,REFER
+Supported: outbound
+User-Agent: Browser Phone 0.3.24 (SIPJS - 0.20.0) Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Content-Type: application/sdp
+Content-Length: 1556
+
+v=0
+o=- 3776520818430971122 2 IN IP4 127.0.0.1
+s=-
+t=0 0
+a=group:BUNDLE 0
+a=extmap-allow-mixed
+a=msid-semantic: WMS ab9f691b-3e43-4530-ad38-231f5ce99b2f
+m=audio 44214 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126
+c=IN IP4 34.166.132.204
+a=rtcp:9 IN IP4 0.0.0.0
+a=candidate:804248646 1 udp 2113937151 7cffc9d2-55ae-4498-a9e0-cf1c1cef2f0e.local 44214 typ host generation 0 network-cost 999
+a=candidate:2553833512 1 udp 1677729535 34.166.132.204 44214 typ srflx raddr 0.0.0.0 rport 0 generation 0 network-cost 999
+a=ice-ufrag:u1dy
+a=ice-pwd:gBDEHkexY6cpZnpBmdgGm32J
+a=ice-options:trickle
+a=fingerprint:sha-256 1A:33:59:DB:0B:B8:BE:77:7A:C3:B6:15:79:A2:31:2E:BB:DE:E3:DE:E7:43:32:0C:A9:01:E6:6D:30:B0:69:42
+a=setup:actpass
+a=mid:0
+a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level
+a=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time
+a=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01
+a=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid
+a=sendrecv
+a=msid:ab9f691b-3e43-4530-ad38-231f5ce99b2f 3c349ec2-93da-47f3-9e62-ae5077689925
+a=rtcp-mux
+a=rtcp-rsize
+a=rtpmap:111 opus/48000/2
+a=rtcp-fb:111 transport-cc
+a=fmtp:111 minptime=10;useinbandfec=1
+a=rtpmap:63 red/48000/2
+a=fmtp:63 111/111
+a=rtpmap:9 G722/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:13 CN/8000
+a=rtpmap:110 telephone-event/48000
+a=rtpmap:126 telephone-event/8000
+a=ssrc:533267626 cname:XIRHy6k9KecZAaAU
+a=ssrc:533267626 msid:ab9f691b-3e43-4530-ad38-231f5ce99b2f 3c349ec2-93da-47f3-9e62-ae5077689925

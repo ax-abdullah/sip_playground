@@ -1,0 +1,11 @@
+ACK sip:5701119694298@15.188.152.201:0;transport=ws SIP/2.0
+Via: SIP/2.0/WSS 192.0.2.13;branch=z9hG4bK2196671
+To: <sip:5701119694298@hojuzat.bevatel.com>;tag=as5ee0bc23
+From: "Abdullah" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca
+CSeq: 2 ACK
+Call-ID: 6eudmg9f02tvm1s3uf51
+Max-Forwards: 70
+Supported: outbound
+User-Agent: Browser Phone 0.3.24 (SIPJS - 0.20.0) Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Content-Length: 0
+

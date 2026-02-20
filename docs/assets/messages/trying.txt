@@ -1,0 +1,11 @@
+SIP/2.0 100 Trying
+Via: SIP/2.0/WSS 192.0.2.13;branch=z9hG4bK7569671;received=34.166.132.204;rport=34798
+From: "Abdullah" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca
+To: <sip:5701119694298@hojuzat.bevatel.com>
+Call-ID: 6eudmg9f02tvm1s3uf51
+CSeq: 2 INVITE
+Server: Hojuzat-Cloud-PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY, INFO, PUBLISH, MESSAGE
+Supported: replaces
+Contact: <sip:5701119694298@15.188.152.201:0;transport=ws>
+Content-Length: 0

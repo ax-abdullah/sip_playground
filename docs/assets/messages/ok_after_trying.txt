@@ -1,0 +1,11 @@
+SIP/2.0 200 OK
+Via: SIP/2.0/WS 15.188.152.201:0;branch=z9hG4bK79a32775;rport
+From: "Unknown" <sip:Unknown@15.188.152.201:0>;tag=as3ec64bc1
+To: <sip:fm9ql4uu@192.0.2.13;transport=wss>;tag=s2d9f93p8m
+CSeq: 102 OPTIONS
+Call-ID: 3c4664e77aaddded3dbdfd366d42e663@15.188.152.201:0
+Supported: outbound
+User-Agent: Browser Phone 0.3.24 (SIPJS - 0.20.0) Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Allow: ACK,BYE,CANCEL,INFO,INVITE,MESSAGE,NOTIFY,OPTIONS,PRACK,REFER,REGISTER,SUBSCRIBE
+Accept: application/sdp,application/dtmf-relay
+Content-Length: 0
