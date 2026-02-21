@@ -15,6 +15,10 @@ class SIPParser {
         this.requestLine = requestLine;
         this.headers = lines;
         this.body = bodyPart;
+
+        this.parseRequestLine();
+        this.parseHeaders();
+        this.parseBody();
     }
 
     parseRequestLine() {
@@ -25,20 +29,29 @@ class SIPParser {
     }
 
     parseHeaders() {
-        this.headers.forEach(line => {
-            const [key, value] = line.split(':');
-            this.headers[key] = value;
+        const headerLines = this.headers;
+        this.headers = {};
+        headerLines.forEach(line => {
+            if (!line.trim()) return;
+            const delimiterIndex = line.indexOf(':');
+            if (delimiterIndex !== -1) {
+                const key = line.substring(0, delimiterIndex).trim();
+                const value = line.substring(delimiterIndex + 1).trim();
+                this.headers[key] = value;
+            }
         });
     }
 
     parseBody() {
-        this.body = JSON.parse(this.body);
-    }
-
-    parse() {
-        this.parseRequestLine();
-        this.parseHeaders();
-        this.parseBody();
+        if (this.body && this.body.trim()) {
+            try {
+                this.body = JSON.parse(this.body);
+            } catch (error) {
+                // If it's not JSON (like SDP), leave as raw string
+            }
+        } else {
+            this.body = null; // Clean up empty body string
+        }
     }
 }
 

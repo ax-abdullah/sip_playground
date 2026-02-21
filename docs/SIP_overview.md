@@ -14,9 +14,23 @@
 - **SIP** is a text-based protocol, similar to HTTP. It uses a request/response model, where the client sends a request to the server, and the server sends a response to the client.
 
 ### SIP Clients and Servers
+
 - **UAC** User Agent Client: The client that initiates the request
 - **UAS** User Agent Server: The server that responds to the request
 - **B2BUA** is a special device that acts as a UAC and UAS. A session border controller (such as Acme Packet, Oracle SBC, AudioCodes) is a B2BUA.
 - **Softswitch** such as Asterisk, FreeSWITCH, OpenSIPS, Kamailio are also B2BUAs.
 - **Proxy Server**: A server that forwards requests to other servers
-- A **Proxy** does not need to be involved for requests after a dialog has been created. 
+- A **Proxy** does not need to be involved for requests after a dialog has been created.
+
+## Current Implementation Details & Limitations
+
+The repository includes a foundational baseline for parsing SIP messages and integrating them into an Express.js environment:
+
+### API & Routing
+
+- **Endpoint**: The application exposes a `POST /parse` route (handled in `src/routes/sipParserRoutes.js` and mounted in `src/routes/index.js`).
+- **Controller**: `src/controllers/SIP/sipParserController.js` processes requests by extracting `rawMessage` from the JSON body and passing it to the `SIPParser` service.
+
+### Service Layer (`SIPParser`)
+
+The logic inside `src/services/SIP/parser.js` currently acts as a text parser for incoming SIP messages. It correctly splits headers by the first colon (preserving complex URIs) and attempts to parse the body as JSON, gracefully falling back to raw text for SDP payloads.

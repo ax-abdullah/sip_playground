@@ -1,6 +1,6 @@
-# Express.js Starter Kit
+# SIP Playground
 
-A production-ready Express.js starter kit with Winston logging, Redis caching, and Socket.io real-time communication.
+A SIP Playground with Winston logging, Redis caching, and Socket.io real-time communication.
 
 ## Features
 
@@ -62,6 +62,7 @@ npm run dev
 | GET | `/health` | Health check with service status |
 | GET | `/api` | API info |
 | GET | `/socket/stats` | Socket.io statistics |
+| POST | `/parse` | (SIP) Parse raw SIP messages (Requires JSON wrapping, limited to basic headers) |
 | GET/POST/PUT/DELETE | `/api/users` | User CRUD with Redis caching |
 
 ## Socket.io Events
@@ -118,9 +119,16 @@ Logs are written to `logs/` directory:
 ## SIP Integration
 
 A foundational SIP parser and documentation repository have been added to this project, providing insights into SIP signaling, fundamentals, and message flows. For comprehensive documentation, please see:
+
 - [SIP Overview](docs/SIP_overview.md)
 - [SIP Messages & Headers Reference](docs/assets/SIP_messages.md)
 - Also included are real-world SIP message captures (e.g., `INVITE`, `REGISTER`, `ACK`, `BYE`, `200 OK`) and Postman collections mapped throughout the codebase (`src/routes/sipParserRoutes.js`, `src/controllers/SIP/`).
+
+### SIP Parser Implementation
+
+The repository includes a basic SIP message parser integrated via Express.js:
+- **Routes & Controllers**: The parser is accessible via the `POST /api/parser/parse-message` endpoint, which delegates to `src/controllers/SIP/sipParserController.js`.
+- **Parser Service (`SIPParser`)**: Located in `src/services/SIP/parser.js`. This service offers foundational text-based parsing of SIP Requests, correctly extracting headers and gracefully parsing both JSON and raw SDP/text payloads.
 
 ## Scripts
 

@@ -10,7 +10,7 @@ class SipParserController {
         this.ApiResponse = ApiResponse;
     }
 
-    async parse(req, res) {
+    parse = async (req, res) => {
         try {
             const { rawMessage } = req.body;
             const parser = new SIPParser();
