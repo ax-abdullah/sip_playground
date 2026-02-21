@@ -31,7 +31,8 @@
     "socket.io-client": "^4.8.3",
     "uuid": "^13.0.0",
     "winston": "^3.19.0",
-    "winston-daily-rotate-file": "^5.0.0"
+    "winston-daily-rotate-file": "^5.0.0",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",

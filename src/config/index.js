@@ -43,6 +43,18 @@ const envSchema = Joi.object({
   LOG_LEVEL: Joi.string()
     .valid('error', 'warn', 'info', 'http', 'debug')
     .default('info'),
+
+  // SIP
+  SIP_DOMAIN: Joi.string().default('localhost'),
+  SIP_UDP_PORT: Joi.number().port().default(5060),
+  SIP_TCP_PORT: Joi.number().port().default(5060),
+  SIP_TLS_PORT: Joi.number().port().default(5061),
+  SIP_WSS_PORT: Joi.number().port().default(8443),
+  SIP_TLS_CERT: Joi.string().allow('').default(''),
+  SIP_TLS_KEY: Joi.string().allow('').default(''),
+  SIP_REALM: Joi.string().default('sip-proxy'),
+  SIP_SERVER_NAME: Joi.string().default('SIP-Proxy/1.0'),
+  SIP_LOG_MESSAGES: Joi.boolean().truthy('true', '1').falsy('false', '0').default(true),
 }).unknown(true); // Allow other env vars
 
 /**
@@ -88,6 +100,21 @@ const config = {
 
   logging: {
     level: envVars.LOG_LEVEL,
+  },
+
+  sip: {
+    domain: envVars.SIP_DOMAIN,
+    udpPort: envVars.SIP_UDP_PORT,
+    tcpPort: envVars.SIP_TCP_PORT,
+    tlsPort: envVars.SIP_TLS_PORT,
+    wssPort: envVars.SIP_WSS_PORT,
+    tls: {
+      cert: envVars.SIP_TLS_CERT || undefined,
+      key: envVars.SIP_TLS_KEY || undefined,
+    },
+    realm: envVars.SIP_REALM,
+    serverName: envVars.SIP_SERVER_NAME,
+    logMessages: envVars.SIP_LOG_MESSAGES,
   },
 };
 
