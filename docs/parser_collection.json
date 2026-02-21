@@ -1,0 +1,202 @@
+{
+  "info": {
+    "name": "SIP Playground Parser API",
+    "description": "All SIP message examples for the SIP Parser API. Based on real-world SIP messages from docs/assets/messages/.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. REGISTER (Initial)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"REGISTER sip:192.168.34.144 SIP/2.0\\r\\nVia: SIP/2.0/UDP 192.168.34.153:50820;branch=z9hG4bK-524287-1---082e49264cbfbf3a;rport\\r\\nMax-Forwards: 70\\r\\nContact: <sip:1000@192.168.34.153:50820;rinstance=2faa2f419739e433>\\r\\nTo: <sip:1000@192.168.34.144>\\r\\nFrom: <sip:1000@192.168.34.144>;tag=2eaa6b0f\\r\\nCall-ID: 80103NTAyMTdhZjg2ZTc5MTdhMDRjZmNiZWI4Y2VkNDNlMDI\\r\\nCSeq: 1 REGISTER\\r\\nExpires: 3600\\r\\nAllow: SUBSCRIBE, NOTIFY, INVITE, ACK, CANCEL, BYE, REFER, INFO, OPTIONS, MESSAGE\\r\\nUser-Agent: X-Lite release 4.9.4 stamp 80103\\r\\nContent-Length: 0\\r\\n\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "2. 401 Unauthorized (Challenge)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"SIP/2.0 401 Unauthorized\\r\\nVia: SIP/2.0/UDP 192.168.34.153:50820;rport=50820;received=192.168.34.153;branch=z9hG4bK-524287-1---082e49264cbfbf3a\\r\\nCall-ID: 80103NTAyMTdhZjg2ZTc5MTdhMDRjZmNiZWI4Y2VkNDNlMDI\\r\\nFrom: <sip:1000@192.168.34.144>;tag=2eaa6b0f\\r\\nTo: <sip:1000@192.168.34.144>;tag=z9hG4bK-524287-1---082e49264cbfbf3a\\r\\nCSeq: 1 REGISTER\\r\\nWWW-Authenticate: Digest  realm=\\\"asterisk\\\",nonce=\\\"1471955086/5e8a879717e9231143a0160a5355daaf\\\",opaque=\\\"6e81bca34e2cab98\\\",algorithm=md5,qop=\\\"auth\\\"\\r\\nServer: FPBX-13.0.163(13.9.1)\\r\\nContent-Length:  0\\r\\n\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "3. REGISTER with Auth",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"REGISTER sip:192.168.34.144 SIP/2.0\\r\\nVia: SIP/2.0/UDP 192.168.34.153:50820;branch=z9hG4bK-524287-1---9646572775ba6c39;rport\\r\\nMax-Forwards: 70\\r\\nContact: <sip:1000@192.168.34.153:50820;rinstance=2faa2f419739e433>\\r\\nTo: <sip:1000@192.168.34.144>\\r\\nFrom: <sip:1000@192.168.34.144>;tag=2eaa6b0f\\r\\nCall-ID: 80103NTAyMTdhZjg2ZTc5MTdhMDRjZmNiZWI4Y2VkNDNlMDI\\r\\nCSeq: 2 REGISTER\\r\\nExpires: 3600\\r\\nAllow: SUBSCRIBE, NOTIFY, INVITE, ACK, CANCEL, BYE, REFER, INFO, OPTIONS, MESSAGE\\r\\nUser-Agent: X-Lite release 4.9.4 stamp 80103\\r\\nAuthorization: Digest username=\\\"1000\\\",realm=\\\"asterisk\\\",nonce=\\\"1471955086/5e8a879717e9231143a0160a5355daaf\\\",uri=\\\"sip:192.168.34.144\\\",response=\\\"83a86c149feb04598895876a9109c901\\\",cnonce=\\\"a6fb2b60f655eb7743403c650fd74cb8\\\",nc=00000001,qop=auth,algorithm=md5,opaque=\\\"6e81bca34e2cab98\\\"\\r\\nContent-Length: 0\\r\\n\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "4. INVITE (with SDP)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"INVITE sip:5701119694298@hojuzat.bevatel.com SIP/2.0\\r\\nVia: SIP/2.0/WSS 192.0.2.13;branch=z9hG4bK7569671\\r\\nTo: <sip:5701119694298@hojuzat.bevatel.com>\\r\\nFrom: \\\"Abdullah\\\" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca\\r\\nCSeq: 2 INVITE\\r\\nCall-ID: 6eudmg9f02tvm1s3uf51\\r\\nMax-Forwards: 70\\r\\nAuthorization: Digest algorithm=MD5, username=\\\"2022\\\", realm=\\\"asterisk\\\", nonce=\\\"0f475b76\\\", uri=\\\"sip:5701119694298@hojuzat.bevatel.com\\\", response=\\\"af17033e33324fed8721fde740e502c1\\\"\\r\\nContact: <sip:fm9ql4uu@192.0.2.13;transport=wss;ob>\\r\\nAllow: ACK,CANCEL,INVITE,MESSAGE,BYE,OPTIONS,INFO,NOTIFY,REFER\\r\\nSupported: outbound\\r\\nUser-Agent: Browser Phone 0.3.24 (SIPJS - 0.20.0)\\r\\nContent-Type: application/sdp\\r\\nContent-Length: 1556\\r\\n\\r\\nv=0\\r\\no=- 3776520818430971122 2 IN IP4 127.0.0.1\\r\\ns=-\\r\\nt=0 0\\r\\na=group:BUNDLE 0\\r\\na=extmap-allow-mixed\\r\\na=msid-semantic: WMS ab9f691b-3e43-4530-ad38-231f5ce99b2f\\r\\nm=audio 44214 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126\\r\\nc=IN IP4 34.166.132.204\\r\\na=rtcp:9 IN IP4 0.0.0.0\\r\\na=ice-ufrag:u1dy\\r\\na=ice-pwd:gBDEHkexY6cpZnpBmdgGm32J\\r\\na=ice-options:trickle\\r\\na=setup:actpass\\r\\na=mid:0\\r\\na=sendrecv\\r\\na=rtcp-mux\\r\\na=rtcp-rsize\\r\\na=rtpmap:111 opus/48000/2\\r\\na=rtpmap:9 G722/8000\\r\\na=rtpmap:0 PCMU/8000\\r\\na=rtpmap:8 PCMA/8000\\r\\na=rtpmap:126 telephone-event/8000\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "5. 100 Trying",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"SIP/2.0 100 Trying\\r\\nVia: SIP/2.0/WSS 192.0.2.13;branch=z9hG4bK7569671;received=34.166.132.204;rport=34798\\r\\nFrom: \\\"Abdullah\\\" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca\\r\\nTo: <sip:5701119694298@hojuzat.bevatel.com>\\r\\nCall-ID: 6eudmg9f02tvm1s3uf51\\r\\nCSeq: 2 INVITE\\r\\nServer: Hojuzat-Cloud-PBX\\r\\nAllow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY, INFO, PUBLISH, MESSAGE\\r\\nSupported: replaces\\r\\nContact: <sip:5701119694298@15.188.152.201:0;transport=ws>\\r\\nContent-Length: 0\\r\\n\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "6. 200 OK (INVITE with SDP)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"SIP/2.0 200 OK\\r\\nVia: SIP/2.0/WSS 192.0.2.13;branch=z9hG4bK7569671;received=34.166.132.204;rport=34798\\r\\nFrom: \\\"Abdullah\\\" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca\\r\\nTo: <sip:5701119694298@hojuzat.bevatel.com>;tag=as5ee0bc23\\r\\nCall-ID: 6eudmg9f02tvm1s3uf51\\r\\nCSeq: 2 INVITE\\r\\nServer: Hojuzat-Cloud-PBX\\r\\nAllow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY, INFO, PUBLISH, MESSAGE\\r\\nSupported: replaces\\r\\nContact: <sip:5701119694298@15.188.152.201:0;transport=ws>\\r\\nContent-Type: application/sdp\\r\\nContent-Length: 879\\r\\n\\r\\nv=0\\r\\no=root 1335455324 1335455324 IN IP4 15.188.152.201\\r\\ns=Asterisk PBX 18.17.1\\r\\nc=IN IP4 15.188.152.201\\r\\nt=0 0\\r\\nm=audio 17776 RTP/SAVPF 0 8 126\\r\\na=rtpmap:0 PCMU/8000\\r\\na=rtpmap:8 PCMA/8000\\r\\na=rtpmap:126 telephone-event/8000\\r\\na=fmtp:126 0-16\\r\\na=ptime:20\\r\\na=maxptime:150\\r\\na=rtcp-mux\\r\\na=sendrecv\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "7. ACK",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"ACK sip:5701119694298@15.188.152.201:0;transport=ws SIP/2.0\\r\\nVia: SIP/2.0/WSS 192.0.2.13;branch=z9hG4bK2196671\\r\\nTo: <sip:5701119694298@hojuzat.bevatel.com>;tag=as5ee0bc23\\r\\nFrom: \\\"Abdullah\\\" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca\\r\\nCSeq: 2 ACK\\r\\nCall-ID: 6eudmg9f02tvm1s3uf51\\r\\nMax-Forwards: 70\\r\\nSupported: outbound\\r\\nUser-Agent: Browser Phone 0.3.24 (SIPJS - 0.20.0)\\r\\nContent-Length: 0\\r\\n\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "8. BYE",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"BYE sip:fm9ql4uu@192.0.2.13;transport=wss;ob SIP/2.0\\r\\nVia: SIP/2.0/WS 15.188.152.201:0;branch=z9hG4bK741fc999;rport\\r\\nMax-Forwards: 70\\r\\nFrom: <sip:5701119694298@hojuzat.bevatel.com>;tag=as5ee0bc23\\r\\nTo: \\\"Abdullah\\\" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca\\r\\nCall-ID: 6eudmg9f02tvm1s3uf51\\r\\nCSeq: 102 BYE\\r\\nUser-Agent: Hojuzat-Cloud-PBX\\r\\nProxy-Authorization: Digest username=\\\"hqm4f069\\\", realm=\\\"asterisk\\\", algorithm=MD5, uri=\\\"sip:hojuzat.bevatel.com\\\", nonce=\\\"0f475b76\\\", response=\\\"da184870d94f7005f03bd218d59936f0\\\"\\r\\nX-Asterisk-HangupCause: Normal Clearing\\r\\nX-Asterisk-HangupCauseCode: 16\\r\\nContent-Length: 0\\r\\n\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "9. 200 OK (after BYE)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"SIP/2.0 200 OK\\r\\nVia: SIP/2.0/WS 15.188.152.201:0;branch=z9hG4bK741fc999;rport\\r\\nFrom: <sip:5701119694298@hojuzat.bevatel.com>;tag=as5ee0bc23\\r\\nTo: \\\"Abdullah\\\" <sip:2022@hojuzat.bevatel.com>;tag=7flrfnjkca\\r\\nCSeq: 102 BYE\\r\\nCall-ID: 6eudmg9f02tvm1s3uf51\\r\\nSupported: outbound\\r\\nUser-Agent: Browser Phone 0.3.24 (SIPJS - 0.20.0)\\r\\nContent-Length: 0\\r\\n\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "10. 200 OK (OPTIONS keepalive)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"SIP/2.0 200 OK\\r\\nVia: SIP/2.0/WS 15.188.152.201:0;branch=z9hG4bK79a32775;rport\\r\\nFrom: \\\"Unknown\\\" <sip:Unknown@15.188.152.201:0>;tag=as3ec64bc1\\r\\nTo: <sip:fm9ql4uu@192.0.2.13;transport=wss>;tag=s2d9f93p8m\\r\\nCSeq: 102 OPTIONS\\r\\nCall-ID: 3c4664e77aaddded3dbdfd366d42e663@15.188.152.201:0\\r\\nSupported: outbound\\r\\nUser-Agent: Browser Phone 0.3.24 (SIPJS - 0.20.0)\\r\\nAllow: ACK,BYE,CANCEL,INFO,INVITE,MESSAGE,NOTIFY,OPTIONS,PRACK,REFER,REGISTER,SUBSCRIBE\\r\\nAccept: application/sdp,application/dtmf-relay\\r\\nContent-Length: 0\\r\\n\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    },
+    {
+      "name": "11. 200 OK (REGISTER response)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rawMessage\": \"SIP/2.0 200 OK\\r\\nVia: SIP/2.0/UDP 192.168.34.144:5060;rport=5060;branch=z9hG4bKPjGI-y29Bep0Pmg-noegpeTEIgJlOqCp1a\\r\\nContact: <sip:192.168.34.153:50820>\\r\\nTo: <sip:1000@192.168.34.153;rinstance=2faa2f419739e433>;tag=85406038\\r\\nFrom: <sip:1000@192.168.34.144>;tag=ArrpYvPGwm-ItSGfGngXuLcbqtblFcGs\\r\\nCall-ID: YREYCykz5u9wN63CsTl4o3pNAD1uyBkn\\r\\nCSeq: 11812 OPTIONS\\r\\nAccept: application/sdp\\r\\nAccept-Language: en\\r\\nAllow: SUBSCRIBE, NOTIFY, INVITE, ACK, CANCEL, BYE, REFER, INFO, OPTIONS, MESSAGE\\r\\nSupported: replaces\\r\\nUser-Agent: X-Lite release 4.9.4 stamp 80103\\r\\nAllow-Events: talk, hold\\r\\nContent-Length: 0\\r\\n\\r\\n\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/parser/parse-message",
+          "host": ["{{base_url}}"],
+          "path": ["api", "parser", "parse-message"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
