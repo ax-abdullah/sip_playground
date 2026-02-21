@@ -35,9 +35,22 @@ class SIPParser {
             if (!line.trim()) return;
             const delimiterIndex = line.indexOf(':');
             if (delimiterIndex !== -1) {
-                const key = line.substring(0, delimiterIndex).trim();
+                const key = line.substring(0, delimiterIndex).trim().toLowerCase();
                 const value = line.substring(delimiterIndex + 1).trim();
-                this.headers[key] = value;
+
+                // Handle duplicate headers (like 'via') by converting them into an array
+                if (this.headers[key]) {
+                    // If it's already an array, push to it
+                    if (Array.isArray(this.headers[key])) {
+                        this.headers[key].push(value);
+                    } else {
+                        // If it's not an array, convert it to an array with the existing value and the new value
+                        this.headers[key] = [this.headers[key], value];
+                    }
+                } else {
+                    // First time seeing this header, store as a string
+                    this.headers[key] = value;
+                }
             }
         });
     }
