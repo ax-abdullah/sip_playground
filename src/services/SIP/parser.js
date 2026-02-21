@@ -1,3 +1,4 @@
+const sdpTransform = require('sdp-transform');
 class SIPParser {
     constructor() {
         this.headers = {};
@@ -61,6 +62,7 @@ class SIPParser {
                 this.body = JSON.parse(this.body);
             } catch (error) {
                 // If it's not JSON (like SDP), leave as raw string
+                this.body = sdpTransform.parse(this.body);
             }
         } else {
             this.body = null; // Clean up empty body string
