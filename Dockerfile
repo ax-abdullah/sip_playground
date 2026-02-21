@@ -30,8 +30,8 @@ RUN mkdir -p logs && chown -R nodejs:nodejs logs
 # Switch to non-root user
 USER nodejs
 
-# Expose port
-EXPOSE 3000
+# Expose ports
+EXPOSE 3000 5060/udp 5060/tcp 5061/tcp 8443/tcp
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \

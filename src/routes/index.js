@@ -4,12 +4,11 @@ const { asyncHandler } = require('../middleware/errorHandler');
 const { ApiResponse } = require('../utils/response');
 
 const userRoutes = require('./userRoutes');
-const sipParseRoutes = require('./sipParserRoutes');
+const sipRoutes = require('./sipRoutes');
 
 // Mount route modules
 router.use('/users', userRoutes);
-
-router.use('/parser', sipParseRoutes);
+router.use('/sip', sipRoutes);
 
 // API info endpoint
 router.get('/', asyncHandler(async (req, res) => {
@@ -18,6 +17,7 @@ router.get('/', asyncHandler(async (req, res) => {
     version: '1.0.0',
     endpoints: {
       users: '/api/users',
+      sip: '/api/sip',
       health: '/health',
       socket: '/socket/stats'
     },
