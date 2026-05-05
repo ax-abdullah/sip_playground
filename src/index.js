@@ -12,6 +12,7 @@ const redisService = require('./services/redis');
 const socketManager = require('./socket');
 const routes = require('./routes');
 const errorHandler = require('./middleware/errorHandler');
+const sipStack = require('./sip');
 
 const app = express();
 const server = http.createServer(app);
@@ -52,6 +53,10 @@ async function initializeServices() {
         });
       },
     });
+
+    // Initialize SIP stack
+    await sipStack.start();
+    logger.info('SIP stack initialized');
 
   } catch (error) {
     logger.error('Service initialization failed', { error: error.message });
@@ -99,6 +104,7 @@ app.get('/health', async (req, res) => {
   const redisHealthy = await redisService.ping();
   const socketStats = await socketManager.getStats();
 
+  const sipStats = sipStack.getStats();
   const healthData = {
     status: redisHealthy ? 'healthy' : 'degraded',
     uptime: process.uptime(),
@@ -108,6 +114,7 @@ app.get('/health', async (req, res) => {
         status: 'healthy',
         ...socketStats,
       },
+      sip: sipStats,
     },
   };
 
@@ -146,6 +153,9 @@ async function gracefulShutdown(signal) {
   }, 3000).unref();
 
   try {
+    // Stop SIP stack
+    await sipStack.stop();
+
     // Close socket.io connections to ensure clean disconnect
     if (socketManager && socketManager.io) {
       socketManager.io.close();
